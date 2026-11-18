@@ -6,7 +6,6 @@ import connectDB from './config/mongodb.js'
 
 const app = express();
 const port = process.env.PORT || 4000;
-connectDB();
 
 app.use(express.json());
 app.use(cookieParser());
@@ -17,6 +16,13 @@ app.get('/', (req, res) =>{
     res.send("api working");
 })
 
-app.listen(port, ()=>{
-    console.log("listening");
-})
+try {
+    await connectDB()
+
+    app.listen(port, ()=>{
+        console.log(`Server listening on port ${port}`)
+    })
+} catch (error) {
+    console.error(`Server startup failed: ${error.message}`)
+    process.exitCode = 1
+}

@@ -1,28 +1,41 @@
 import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema({
-    name:{
-        type:String,
-        required:true
+    name: {
+        type: String,
+        required: true
     },
-    email:{
-        type:String,
-        required:true
+    email: {
+        type: String,
+        required: true
     },
-    password:{
-        type:String,
-        required:true
+    password: {
+        type: String,
+        required: true
     },
-    verifyOTP:{
-        type:String,
-        default:''
+    verifyOTP: {
+        type: String,
+        default: ''
     },
-    verifyOTPExpireAt:{
-        type:Number,
-        default:0
+    verifyOTPExpireAt: {
+        type: Number,
+        default: 0
     },
-    isAccountVerified:{
-        type:boolean,
-         default: false
+    isAccountVerified: {
+        type: Boolean,
+        default: false
+    },
+    resetOTP:{
+        type: String,
+        default: ''
+    },
+    resetOTPExpireAt: {
+        type: Number,
+        default: 0
     }
-})
+});
+
+const userModel =
+    mongoose.models.User || mongoose.model('User', userSchema)
+//user or so that it doesnt create a new model if it already exists in the database
+export default userModel
